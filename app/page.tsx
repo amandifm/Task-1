@@ -23,23 +23,24 @@ export default function Home() {
     fetchCounter();
   }, []);
 
-  const updateCounter = async (newValue: number) => {
-    setCount(newValue);
+const updateCounter = async (newValue: number) => {
+  setCount(newValue);
 
-    try {
-      await fetch("/api/counter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          count: newValue,
-        }),
-      });
-    } catch (error) {
-      console.log("Failed to update counter:", error);
-    }
-  };
+  try {
+    await fetch("/api/counter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: 1,
+        count: newValue,
+      }),
+    });
+  } catch (error) {
+    console.log("Failed to update counter:", error);
+  }
+};
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 flex items-center justify-center px-6">
