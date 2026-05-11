@@ -6,35 +6,34 @@ export default function Home() {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCounter = async () => {
-      try {
-        const res = await fetch("/api/counter");
-        const data = await res.json();
+useEffect(() => {
+  const fetchCounter = async () => {
+    try {
+      const res = await fetch("/api/counter");
+      const data = await res.json();
+      console.log("data from the get request == ", data);
+      setCount(data.counter || 0);
+    } catch (error) {
+      console.log("Failed to fetch counter:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        setCount(data.count || 0);
-      } catch (error) {
-        console.log("Failed to fetch counter:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCounter();
-  }, []);
+  fetchCounter();
+}, []); 
 
 const updateCounter = async (newValue: number) => {
   setCount(newValue);
 
   try {
     await fetch("/api/counter", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: 1,
-        count: newValue,
+        counter: newValue, 
       }),
     });
   } catch (error) {
